@@ -1,20 +1,18 @@
+import unittest
+
 import requests
-from selenium import webdriver
+from DriverStart.DriverStart import Driver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-chrome_options = Options().add_argument("--start-maximized")
-driver = webdriver.Chrome(options=chrome_options)
 
-wait = WebDriverWait(driver, 10)
+class
 
-driver.get("https://www.bitfinex.com/")
+Driver.startDriver("https://www.bitfinex.com/",10)
 
 xpath = "//td[contains(text(),'BTCUSD')]/../td[@class=\"col-currency\"][1]"
 
-wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
+driver = Driver.wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
 
 element = driver.find_element_by_xpath(xpath)
 
@@ -26,5 +24,8 @@ for dict in response:
     if dict["pair"] == "BTCUSD":
         APIText = dict["last_price"]
 
+UIText=float(UIText.replace(",",""))
 print("APIText  =  ", APIText)
 print("UIText   =  ", UIText)
+
+unittest.TestCase().assertEqual(APIText,UIText,"API and UI values are different")
