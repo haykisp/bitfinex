@@ -8,6 +8,10 @@ from DriverStart import startDriver
 
 class Test(unittest.TestCase):
     def test_UIvsAPI(self):
+        """
+        getting UI and API values and testing equality
+        :return:
+        """
         # Start driver
         driver, wait = startDriver("https://www.bitfinex.com/", 10)
 
