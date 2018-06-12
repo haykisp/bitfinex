@@ -21,6 +21,20 @@ class Test(unittest.TestCase):
         # Waiting to load page(needed element)
         wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
 
+        # """ Getting value from V1 """
+        # response = requests.get("https://api.bitfinex.com/v1/tickers").json()
+        # for dict in response:
+        #     if dict["pair"] == "BTCUSD":
+        #         APIText = dict["last_price"]
+
+
+        # """ Getting value from V2 """
+        # Getting values from API and converting to JSON format
+        response = requests.get("https://api.bitfinex.com/v2/ticker/tBTCUSD").json()
+
+        # Getting "last_price" value of BTCUSD from API response
+        APIText = float(response[0])
+
         # Creating element
         BTCUSD = driver.find_element_by_xpath(xpath)
 
@@ -29,17 +43,6 @@ class Test(unittest.TestCase):
 
         # Changing type of value from String to Float
         UIText = float(UIText.replace(",", ""))
-
-        # Empty value of API response
-        APIText = ""
-
-        # Getting value from API and converting to JSON format
-        response = requests.get("https://api.bitfinex.com/v1/tickers").json()
-
-        # Getting "last_price" value of BTCUSD from API response
-        for dict in response:
-            if dict["pair"] == "BTCUSD":
-                APIText = dict["last_price"]
 
         # Comparing API response and UI values
         self.assertEqual(APIText, UIText, "API and UI values are different")
